@@ -24,16 +24,16 @@
     <div class="Form-div">
 
         <div class="input-div">
-            <form action="" class="input-div">
+            <form action="/user/create-user" method="post" class="input-div">
 
-            <label for="first-name">First Name</label>
-            <input type="text" id="first_name" name="first-name" placeholder=" First Name" required>
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" placeholder=" First Name" required>
 
-            <label for="last-name">Last Name</label>
-            <input type="text" id="last_name" name="last-name" placeholder=" Last Name" required>
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" placeholder=" Last Name" required>
 
-            <label for="DOB">Date Of Birth</label>
-            <input type="date" id="DOB" name="DOB" required>
+            <label for="dob">Date Of Birth</label>
+            <input type="date" id="DOB" name="dob" required>
 
             <label for="gender">Gender</label>
             <select name="gender" id="gender" required>
@@ -43,12 +43,12 @@
                 <option value="O">Other</option>
             </select>
 
-            <label for="country">Country</label>
-            <input type="text" id="country" name="country" placeholder=" Country" required>
+            <label for="number">Number</label>
+            <input type="number" id="number" name="number" placeholder="Number" required>
 
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder=" Email" required>
-            <p hidden></p>
+            <p <%= hide %>>Email already registered</p>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Set Password" required>
@@ -61,10 +61,12 @@
 
         <div class="sign_up_link">
             <p>Or Sign Up With</p>
-            <a href=""><i class="fab fa-google" aria-hidden="true" style="font-size: larger;"></i>mail</a>
+            <a href="" id="google_sign_up"><i class="fab fa-google" aria-hidden="true" style="font-size: larger;"></i>mail</a>
         </div>
          
     </div>
+
+    <script src="/js/script_sign_up.js"></script>
      
 </body>
 </html>

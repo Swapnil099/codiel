@@ -1,3 +1,3 @@
 module.exports.home = function(req,res){
-    return res.render('sign_in');
+    return res.send("<h2> codiel home page </h2>");
 }
