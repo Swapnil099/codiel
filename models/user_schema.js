@@ -30,6 +30,8 @@ const userSchema = new mongoose.Schema({
         type:String,
         require:true
     }
+},{
+    timestamps:true
 });
 
 const userInfo = mongoose.model('userInfo',userSchema);

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Capriola&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/timeline.css">
+</head>
+<body>
+    <nav>
+        <div class="header">
+            <h1>CODIEL</h1>
+            <a href="/user/timeline">Timeline</a>
+            <a href="#">Search</a>
+            <a href="/user/profile">Profile</a>
+            <a href="#">Friends</a>
+            <a href="#">Chat</a>
+            <a href="#">Setting</a>
+            <a href="/user/sign-out">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="all_content">
+        <div class="create_post">
+            <form action="/posts/create-post" method="post">
+                <textarea name="article" id="" cols="60" rows="4" placeholder="Create Post"></textarea>
+                <a href="#" id="Select_image"> <i class="fas fa-images"></i> Select Image </a>
+                <hr width="100%" color="black">
+                <button type="submit"> Post</button>
+            </form>
+        </div>
+
+        <div class="feed_post">
+            <div class="upload_time">
+                <p>10 min ago</p>
+            </div>
+            <div class="user_info">
+                <img src="/photos/dp.png" alt="Avatar" class="dp_img">
+                <p>Swapnil Gawande</p>
+            </div>
+            <p class="caption">This is my photo</p>
+            <p> <i class="fas fa-thumbs-up"></i> 15 Peoples liked this post  </p>
+            <hr width="100%" color="black">
+            <div class="like_comment">
+                <div class="like_btn_div">
+                    <a href=""> <i class="far fa-heart"></i> </a>
+                    <p>Like</p>
+                </div>
+                <div class="comment_btn_div">
+                    <a href=""> <i class="far fa-comment"></i> </a>
+                    <p>Comment</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const image_btn = document.getElementById('Select_image');
+        image_btn.onclick = function(){
+            window.alert('This feature is under development');
+        }
+    </script>
+
+
+</body>
