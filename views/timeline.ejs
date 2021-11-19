@@ -34,28 +34,83 @@
             </form>
         </div>
 
-        <div class="feed_post">
-            <div class="upload_time">
-                <p>10 min ago</p>
-            </div>
-            <div class="user_info">
-                <img src="/photos/dp.png" alt="Avatar" class="dp_img">
-                <p>Swapnil Gawande</p>
-            </div>
-            <p class="caption">This is my photo</p>
-            <p> <i class="fas fa-thumbs-up"></i> 15 Peoples liked this post  </p>
-            <hr width="100%" color="black">
-            <div class="like_comment">
-                <div class="like_btn_div">
-                    <a href=""> <i class="far fa-heart"></i> </a>
-                    <p>Like</p>
+        <%
+        
+            for(post of posts){%>
+                <div class="feed_post">
+                    <div class="upload_time">
+                        <% const currDate = new Date(); %>
+                        <% const diffInSeconds = Math.abs(post.createdAt - currDate) / 1000; %>
+                        <% const days = Math.floor(diffInSeconds / 60 / 60 / 24); %>
+                        <% const hours = Math.floor(diffInSeconds / 60 / 60 % 24); %>
+                        <% const minutes = Math.floor(diffInSeconds / 60 % 60); %>
+        
+                        <% if (days > 0) { %>
+                            <p> Posted <%=days%> days ago </p>
+                        <% } else if (hours > 0) { %>
+                            <p>Posted <%= hours %> Hours ago</p>
+                        <% } else if(minutes > 2) { %>
+                            <p>Posted <%= minutes %> Minutes ago</p>
+                        <% } else{%>
+                            <p>Posted Just Now</p>
+                        <% } %>
+
+                    </div>
+                    <div class="user_info">
+                        <div class="user_info_2">
+                            <img src="/photos/dp.png" alt="Avatar" class="dp_img">
+                            <p> <%= post.user.first_name %> <%= post.user.last_name %> </p>
+                        </div>
+                        <div class="post_delete_button">
+                            <%          
+                                if(locals.user && (post.user.id == locals.user.id)) {%>
+                                    <a href="/posts/delete-post/<%= post.id %>" > <i class="fas fa-trash"></i> </a>    
+                                <%}
+                            %>
+                        </div>
+
+                    </div>
+                    <p class="caption"><%= post.content %></p>
+                    <p> <i class="fas fa-thumbs-up"></i> 15 Peoples liked this post  </p>
+                    <hr width="100%" color="black">
+                    <div class="like_comment">
+                        <div class="like_btn_div">
+                            <a href=""> <i class="far fa-heart"></i> </a>
+                            <p>Like</p>
+                        </div>
+                        <div class="comment_btn_div">
+                            <a > <i class="far fa-comment"></i> </a>
+                            <p>Comment</p>
+                        </div>
+                    </div>
+
+
+                    <div class="comment_display" id="comment_id">
+                        <form action="/comment/create" method="post">
+                            <textarea name="comment_content" id="" cols="60" rows="2" placeholder="Write Comment"></textarea>
+                            <input type="hidden" value="<%= post._id %>" name="post_id">
+                            <input type="hidden" value="<%= locals.user._id %>" name="comment_user_id" >
+                            <button type="submit">Comment</button>
+                        </form>
+                        
+                        <%             
+                            for(comment of post.comments){%>
+                                <div class="comment">
+                                    <div class="comment_userinfo">
+                                        <img src="/photos/dp.png" alt="Avatar">
+                                        <p> <%=comment.user_id.first_name%> <%=comment.user_id.last_name%> </p>
+                                    </div>
+                                    <div class="comment_content">
+                                          <p> <%= comment.content %> </p>
+                                    </div>
+                                </div>
+                            <%}           
+                        %>
+                    </div>
                 </div>
-                <div class="comment_btn_div">
-                    <a href=""> <i class="far fa-comment"></i> </a>
-                    <p>Comment</p>
-                </div>
-            </div>
-        </div>
+            <%}
+        %>
+
     </div>
 
     <script>

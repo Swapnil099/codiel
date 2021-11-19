@@ -83,7 +83,8 @@ a{
     height: auto;
     margin: 0px;
     padding: 15px;
-    background-color: rgba(255, 255, 255, 0.73);
+    background-color: rgba(255, 255, 255, 0.877);
+    filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.521));
     border-radius: 10px;
     display: flex;
     flex-direction: row;    
