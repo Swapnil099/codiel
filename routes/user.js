@@ -14,6 +14,8 @@ function checkAuthentication(req,res,next){
 
 router.get('/profile',checkAuthentication,userController.profile);
 
+router.get('/show-profile/:id',checkAuthentication,userController.show_user);
+
 router.get('/sign-up',userController.sign_up);
 
 router.get('/sign-in',userController.sign_in);
@@ -28,6 +30,8 @@ router.post('/create-session', passport.authenticate(
 ),userController.create_session);
 
 router.get('/timeline',checkAuthentication,userController.timeline);
+
+router.get('/search',checkAuthentication,userController.search);
 
 
 

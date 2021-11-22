@@ -10,7 +10,9 @@ body{
     font-family: 'Capriola', sans-serif;
     color: #FFFA87;
     margin: 0px;
+    transition: 0.5s ease-in-out;
 }
+
 
 nav{
     Height: 60px;
@@ -51,9 +53,15 @@ nav a{
 }
 
 a:hover{
-    opacity: 0.6;
+    transform: scale(1.1);
+    color: rgb(162, 91, 228);
+}
+
+.active_link{
+    color: rgb(162, 91, 228)!important;
 
 }
+
 
 a:active{
     opacity: 0.7;
@@ -71,11 +79,11 @@ a:active{
 .create_post{
     margin: 0px;
     background-color: rgba(255, 255, 255, 0.877);
+    filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.521));
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.521));
 
 }
 
@@ -235,18 +243,43 @@ p{
     overflow: scroll;
     overflow-x: hidden;
     padding-bottom: 10px;
+    transition: 1s ease-in-out;
  
 }
 
 .comment_display form{
-    width: 90%;
+    width: 70%;
 }
 
 .comment_userinfo{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
+}
+
+.comment_userinfo_1{
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.comment_userinfo_2{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.comment_userinfo_2 a{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
 }
 
 .comment_display button {
@@ -277,13 +310,13 @@ p{
 }
 
 .comment{
-    width: 90%;
+    width: 70%;
     margin-top: 5px;
     padding: 1px;
-    border: solid rgb(65, 65, 65); 
-    border-width: 2px;
+    /* border: solid rgb(65, 65, 65); 
+    border-width: 2px; */
     border-radius: 10px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 .comment_content{
     margin-top: 0px;
@@ -303,11 +336,16 @@ p{
 }
 
 .hidden-content{
-    display: none;
+    margin: 0px;
+    padding: 0px;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 0px!important;
 }
 
 ::-webkit-scrollbar-track {

@@ -14,8 +14,8 @@
     <nav>
         <div class="header">
             <h1>CODIEL</h1>
-            <a href="/user/timeline">Timeline</a>
-            <a href="#">Search</a>
+            <a href="/user/timeline" class="active_link">Timeline</a>
+            <a href="/user/search">Search</a>
             <a href="/user/profile">Profile</a>
             <a href="#">Friends</a>
             <a href="#">Chat</a>
@@ -59,7 +59,7 @@
                     <div class="user_info">
                         <div class="user_info_2">
                             <img src="/photos/dp.png" alt="Avatar" class="dp_img">
-                            <p> <%= post.user.first_name %> <%= post.user.last_name %> </p>
+                            <p> <a href="/user/show-profile/<%= post.user.id %>"> <%= post.user.first_name %> <%= post.user.last_name %> </a> </p>
                         </div>
                         <div class="post_delete_button">
                             <%          
@@ -79,13 +79,14 @@
                             <p>Like</p>
                         </div>
                         <div class="comment_btn_div">
-                            <a > <i class="far fa-comment"></i> </a>
+                            <%const postId = post.id %>
+                            <a onclick="toggleCommentSec('<%= post.id %>')" > <i class="far fa-comment"></i> </a>
                             <p>Comment</p>
                         </div>
                     </div>
 
 
-                    <div class="comment_display" id="comment_id">
+                    <div class="comment_display <%= post.id%> hidden-content" id="comment_id">
                         <form action="/comment/create" method="post">
                             <textarea name="comment_content" id="" cols="60" rows="2" placeholder="Write Comment"></textarea>
                             <input type="hidden" value="<%= post._id %>" name="post_id">
@@ -95,10 +96,20 @@
                         
                         <%             
                             for(comment of post.comments){%>
-                                <div class="comment">
+                                <div class="comment ">
                                     <div class="comment_userinfo">
-                                        <img src="/photos/dp.png" alt="Avatar">
-                                        <p> <%=comment.user_id.first_name%> <%=comment.user_id.last_name%> </p>
+                                        <div class="comment_userinfo_1">
+                                            <img src="/photos/dp.png" alt="Avatar">
+                                            <p> <%=comment.user_id.first_name%> <%=comment.user_id.last_name%> </p>
+                                        </div>
+
+                                        <div class="comment_userinfo_2">
+                                                <%
+                                                    if(locals.user && (comment.user_id.id == locals.user.id)){%>
+                                                        <a href="/comment/delete/<%= comment.id %>"> <i class="fas fa-trash"></i> </a>    
+                                                    <%}
+                                                %>    
+                                        </div>
                                     </div>
                                     <div class="comment_content">
                                           <p> <%= comment.content %> </p>
@@ -118,6 +129,16 @@
         image_btn.onclick = function(){
             window.alert('This feature is under development');
         }
+        
+        function toggleCommentSec(postId){
+            const commentSection = document.getElementsByClassName(postId);
+            for(i=0;i<commentSection.length;i++){
+                commentSection[i].classList.toggle('hidden-content');
+            }
+            return;
+        }
+
+
     </script>
 
 

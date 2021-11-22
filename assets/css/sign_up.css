@@ -22,6 +22,16 @@ a{
     border: none;
 }
 
+a:hover{
+    transform: scale(1.1);
+    color: rgb(162, 91, 228);
+}
+
+.active_link{
+    color: blueviolet!important;
+
+}
+
 .title-div{
     text-align: center;
     margin-top: 40px;

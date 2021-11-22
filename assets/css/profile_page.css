@@ -50,12 +50,17 @@ nav a{
 }
 
 a:hover{
-    opacity: 0.6;
+    transform: scale(1.1);
+    color: rgb(162, 91, 228);
+}
+
+.active_link{
+    color: rgb(162, 91, 228)!important;
 
 }
 
 a:active{
-    opacity: 0.7;
+    opacity: 0.1;
 }
 
 a{
@@ -66,6 +71,8 @@ a{
     text-decoration: none;
     transition: ease-in-out 0.3s;
 }
+
+
 
 .all_content{
     /* background-color: rgba(255, 255, 255, 0.432); */
