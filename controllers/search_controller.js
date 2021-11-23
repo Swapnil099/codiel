@@ -28,10 +28,10 @@ module.exports.searchUser = async function(req,res){
             {first_name:{$regex:user_first_name , $options:'i'}},
             {last_name:{$regex:user_last_name , $options:'i'}}
         ]});
-    
+        
         return res.render('search_page',{
-            found_users : users
-        });  
+            found_users : users,
+        });
     }
     catch(err){
         console.log('error',err);

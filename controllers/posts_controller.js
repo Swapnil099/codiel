@@ -7,11 +7,12 @@ module.exports.create_post = function(req,res){
         user:req.user.id
     },function(err,post){
         if(err){
-            console.log(err);
-            return;
+            req.flash('error',err);
+            return res.redirect('back');
         }
-        console.log(post);
+        // console.log(post);
     });
+    req.flash('success','Post Created Successfully');
     return res.redirect('back');
 }
 
@@ -37,13 +38,15 @@ module.exports.delete_post = async function(req,res){
         if(post.user == req.user.id){
             const deleted = await commentInfo.deleteMany({"post_id":req.params.id});
             post.remove();
+            req.flash('success','Post Deleted');
             return res.redirect('back'); 
         }
+        req.flash('success','Your are Not authorized to delete this post');
         return res.redirect('back');
     }
     catch(err){
-        console.log('error',err);
-        return;
+        req.flash('error',err);
+        return res.redirect('back');
     }
 
 

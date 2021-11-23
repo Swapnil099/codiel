@@ -32,13 +32,14 @@ module.exports.create_comment = async function(req,res){
                             });
             post.comments.push(comment);
             post.save();
+            req.flash('success','Comment Added Successfully');
             return res.redirect('/user/timeline');
         }
         return res.redirect('/user/timeline');
     }
     catch(err){
-        console.log('error',err);
-        return;
+        req.flash('error',err);
+        return res.redirect('back');
     }
 }
 
@@ -71,13 +72,15 @@ module.exports.delete_comment = async function(req,res){
             let postId = comment.post_id;
             comment.remove();
             await postInfo.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
+            req.flash('success','Comment Deleted');
             return res.redirect('back');
         }
+        req.flash('success','Not authorized to delete this comment');
         return res.redirect('back');
     }
     catch(err){
-        console.log('error',err);
-        return;
+        req.flash('error',err);
+        return res.redirect('back');
     }
 
 }

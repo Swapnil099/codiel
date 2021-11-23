@@ -4,16 +4,17 @@ const userInfo = require('../models/user_schema');
 
 passport.use(new LocalStrategy(
     {
-        usernameField:'email'
+        usernameField:'email',
+        passReqToCallback:true
     },
-    function(email,password,done){
+    function(req,email,password,done){
         userInfo.findOne({email:email},function(err,user){
             if(err){
-                console.log(err);
+                req.flash('error',err);
                 return done(err);
             }
             if(!user || user.password!=password){
-                console.log("user not found in --> passport");
+                req.flash('success','Invalid Username/Password');
                 return done(null,false);
             }
             return done(null,user);

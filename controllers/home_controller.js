@@ -1,3 +1,3 @@
 module.exports.home = function(req,res){
-    return res.redirect('/user/profile');
+    return res.redirect('/user/timeline');
 }

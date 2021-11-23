@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Capriola&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <link rel="stylesheet" href="/css/sign_in.css">
     <title>Codiel</title>
 </head>
@@ -20,6 +22,7 @@
         </div>
         <hr width="300px" size="1px" color="white">
     </div>
+
 
     <div class="Form-div">
 
@@ -42,6 +45,29 @@
         <a href="/user/sign-up"><i class="fas fa-user-plus"></i> Create New Account</a>
          
     </div>
+
+    <script>
+        <% if(flash.success && flash.success.length > 0){%>
+            new Noty({
+                theme:'relax',
+                text : "<%= flash.success %>",
+                type:'success',
+                layout:'topRight',
+                timeout:1500
+            }).show();  
+        <%} %>
+
+        <% if(flash.error && flash.error.length > 0){%>
+            new Noty({
+                theme:'relax',
+                text : "<%= flash.error %>",
+                type:'error',
+                layout:'topRight',
+                timeout:1500
+            }).show();  
+        <%} %>
+
+    </script>
      
 </body>
 </html>

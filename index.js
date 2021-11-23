@@ -9,6 +9,8 @@ const passport = require('passport');
 const session = require('express-session');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
+const customMware = require('./config/custom_Mware_flash');
 
 app.set('view engine','ejs');
 app.set('views','./views');
@@ -36,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 app.use(function(req,res,next){
     if(req.isAuthenticated()){
         res.locals.user = req.user
@@ -44,8 +47,9 @@ app.use(function(req,res,next){
     next();
 });
 
-
-
+app.use(flash()); 
+app.use(customMware.setFlash);
+  
 
 
 app.use('/',router);

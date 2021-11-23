@@ -27,18 +27,14 @@ module.exports.sign_up = function(req,res){
         return res.redirect('/user/profile');
     }
 
-    return res.render('sign_up',{
-        hide:"hidden"
-    });
+    return res.render('sign_up');
 }
 
 module.exports.sign_in = function(req,res){
     if(req.isAuthenticated()){
-        return res.redirect('/user/profile');
+        return res.redirect('/user/timeline');
     }
-
     return res.render('sign_in');
-
 }
 
 module.exports.create_user = async function(req,res){
@@ -66,23 +62,29 @@ module.exports.create_user = async function(req,res){
         const user = await userInfo.findOne({email:req.body.email});
         if(!user){
             const user_data = await userInfo.create(req.body);
+            req.flash('success','Account Created Successfully');
             return res.redirect('/user/sign-in');
         }
-        res.render('sign_up',{
-            hide : "nothidden"
-        });
+
+        req.flash('error','This Email is already have a registered user');
+        return res.redirect('/user/sign-up');
+        // res.render('sign_up',{
+        //     hide : "nothidden"
+        // });
     }catch(err){
-        console.log('error',err);
-        return;
+        req.flash('error',err);
+        return res.redirect('back');
     }
 }
 
 module.exports.create_session = function(req,res){
-    return res.redirect('/');
+    req.flash('success','Logged In successfully');
+    return res.redirect('/user/timeline');
 }
 
 module.exports.destroy_session = function(req,res){
     req.logout();
+    req.flash('success','You have logged out');
     return res.redirect('/user/sign-in');
 }
 
@@ -105,7 +107,7 @@ module.exports.timeline = async function(req,res){
 
     // below code is modified version of above code
     try{
-        const posts = await postInfo.find({}).populate('user').populate({
+        const posts = await postInfo.find({}).sort('-createdAt').populate('user').populate({
             path: 'comments',
             populate:{
                 path : 'user_id'
