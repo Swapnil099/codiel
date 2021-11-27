@@ -33,12 +33,23 @@ module.exports.create_comment = async function(req,res){
             post.comments.push(comment);
             post.save();
             req.flash('success','Comment Added Successfully');
+            
+            if(req.xhr){
+                const createdComment = await commentInfo.findById(comment.id).populate('user_id');
+                return res.status(200).json({
+                    data:{
+                        sendComment : createdComment
+                    },
+                    success:"Post Created"
+                });
+            }
+
             return res.redirect('/user/timeline');
         }
         return res.redirect('/user/timeline');
     }
     catch(err){
-        req.flash('error',err);
+        // req.flash('error',err);
         return res.redirect('back');
     }
 }

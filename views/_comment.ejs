@@ -1,0 +1,21 @@
+<li id="comment_id_<%= comment.id %>">
+    <div class="comment ">
+        <div class="comment_userinfo">
+            <div class="comment_userinfo_1">
+                <img src="<%= user.avatar %>" alt="Avatar">
+                <p> <%=comment.user_id.first_name%> <%=comment.user_id.last_name%> </p>
+            </div>
+    
+            <div class="comment_userinfo_2">
+                    <%
+                        if(locals.user && (comment.user_id.id == locals.user.id)){%>
+                            <a href="/comment/delete/<%= comment.id %>"> <i class="fas fa-trash"></i> </a>    
+                        <%}
+                    %>    
+            </div>
+        </div>
+        <div class="comment_content">
+              <p> <%= comment.content %> </p>
+        </div>
+    </div>
+</li>

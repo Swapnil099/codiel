@@ -120,7 +120,7 @@ module.exports.timeline = async function(req,res){
     }
     catch(err){
         console.log('error',err);
-        return;
+        return req.redirect('back');
     }
 }
 
@@ -131,4 +131,59 @@ module.exports.search = function(req,res){
     });
 }
 
+module.exports.setting = async function(req,res){
+    try{
+        const user = await userInfo.findById(req.user.id);
+        return res.render('setting_page',{
+            user:user
+        });
+    }
+    catch(err){
+        conole.log('error',err);
+        return req.redirect('back');
+        
+    }
+}
+
+module.exports.update_profile = async function(req,res){
+    try{
+        const user = await userInfo.findById(req.user.id);
+        const updated_info = {
+            first_name : req.body.new_first_name,
+            last_name : req.body.new_last_name,
+            number:req.body.new_number,
+            dob:req.body.new_dob,
+            email:req.body.new_email
+        }
+
+        const filter = {_id:user._id};
+        const updatedUserInfo = await userInfo.findOneAndUpdate(filter,updated_info,{returnOriginal:false});
+        console.log(updatedUserInfo.number)
+        req.flash('success',"Profile is updated");
+        return res.redirect('back');
+    }
+    catch(err){
+        console.log('error',err);
+        return req.redirect('back');
+    }
+    
+}
+
+
+module.exports.update_dp = async function(req,res){
+    try{
+        let user = await userInfo.findById(req.user.id);
+        userInfo.uploadedAvatar(req,res,function(err){
+            if(err) console.log('multer error - ',err);
+            user.avatar = userInfo.avatarPath + '/' + req.file.filename;
+            user.save();
+            req.flash('success','Profile Picture updated');
+            return res.redirect('back');
+        });      
+    }
+    catch(err){
+        console.log('error',err);
+        return req.redirect('back');        
+    }
+}
 

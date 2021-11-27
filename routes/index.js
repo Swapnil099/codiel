@@ -11,6 +11,7 @@ router.use('/posts',require('./posts'));
 router.use('/comment',require('./comment'));
 router.use('/search',require('./search'));
 
+router.use('/api',require('./api'));
 
 console.log("router loaded");
 

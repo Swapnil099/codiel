@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Capriola&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <title>Document</title>
     <link rel="stylesheet" href="/css/timeline.css">
 </head>
@@ -21,14 +22,14 @@
             <a href="/user/profile">Profile</a>
             <a href="#">Friends</a>
             <a href="#">Chat</a>
-            <a href="#">Setting</a>
+            <a href="/user/setting">Setting</a>
             <a href="/user/sign-out">Log Out</a>
         </div>
     </nav>
 
-    <div class="all_content">
+    <div class="all_content" id="all_content">
         <div class="create_post">
-            <form action="/posts/create-post" method="post">
+            <form action="/posts/create-post" method="post" id="postForm">
                 <textarea name="article" id="" cols="60" rows="4" placeholder="Create Post"></textarea>
                 <a href="#" id="Select_image"> <i class="fas fa-images"></i> Select Image </a>
                 <hr width="100%" color="black">
@@ -36,94 +37,83 @@
             </form>
         </div>
 
-        <%
+        <ul>
+
+            <%
         
             for(post of posts){%>
-                <div class="feed_post">
-                    <div class="upload_time">
-                        <% const currDate = new Date(); %>
-                        <% const diffInSeconds = Math.abs(post.createdAt - currDate) / 1000; %>
-                        <% const days = Math.floor(diffInSeconds / 60 / 60 / 24); %>
-                        <% const hours = Math.floor(diffInSeconds / 60 / 60 % 24); %>
-                        <% const minutes = Math.floor(diffInSeconds / 60 % 60); %>
-        
-                        <% if (days > 0) { %>
-                            <p> Posted <%=days%> days ago </p>
-                        <% } else if (hours > 0) { %>
-                            <p>Posted <%= hours %> Hours ago</p>
-                        <% } else if(minutes > 2) { %>
-                            <p>Posted <%= minutes %> Minutes ago</p>
-                        <% } else{%>
-                            <p>Posted Just Now</p>
-                        <% } %>
-
-                    </div>
-                    <div class="user_info">
-                        <div class="user_info_2">
-                            <img src="/photos/dp.png" alt="Avatar" class="dp_img">
-                            <p> <a href="/user/show-profile/<%= post.user.id %>"> <%= post.user.first_name %> <%= post.user.last_name %> </a> </p>
+                <li id="post-<%= post.id %>" >
+                    <div class="feed_post">
+                        <div class="upload_time">
+                            <% const currDate = new Date(); %>
+                            <% const diffInSeconds = Math.abs(post.createdAt - currDate) / 1000; %>
+                            <% const days = Math.floor(diffInSeconds / 60 / 60 / 24); %>
+                            <% const hours = Math.floor(diffInSeconds / 60 / 60 % 24); %>
+                            <% const minutes = Math.floor(diffInSeconds / 60 % 60); %>
+            
+                            <% if (days > 0) { %>
+                                <p> Posted <%=days%> days ago </p>
+                            <% } else if (hours > 0) { %>
+                                <p>Posted <%= hours %> Hours ago</p>
+                            <% } else if(minutes > 2) { %>
+                                <p>Posted <%= minutes %> Minutes ago</p>
+                            <% } else{%>
+                                <p>Posted Just Now</p>
+                            <% } %>
                         </div>
-                        <div class="post_delete_button">
-                            <%          
-                                if(locals.user && (post.user.id == locals.user.id)) {%>
-                                    <a href="/posts/delete-post/<%= post.id %>" > <i class="fas fa-trash"></i> </a>    
-                                <%}
-                                
-                            %>
+                        <div class="user_info">
+                            <div class="user_info_2">
+                                <img src="<%= post.user.avatar %>" alt="Avatar" class="dp_img">
+                                <p> <a href="/user/show-profile/<%= post.user.id %>"> <%= post.user.first_name %> <%= post.user.last_name %> </a> </p>
+                            </div>
+                            <div class="post_delete_button">
+                                <%          
+                                    if(locals.user && (post.user.id == locals.user.id)) {%>
+                                        <a class="delete_post_button" href="/posts/delete-post/<%= post.id %>" > <i class="fas fa-trash"></i> </a>    
+                                    <%}   
+                                %>
+                            </div>
+    
                         </div>
-
-                    </div>
-                    <p class="caption"><%= post.content %></p>
-                    <p> <i class="fas fa-thumbs-up"></i> 15 Peoples liked this post  </p>
-                    <hr width="100%" color="black">
-                    <div class="like_comment">
-                        <div class="like_btn_div">
-                            <a href=""> <i class="far fa-heart"></i> </a>
-                            <p>Like</p>
+                        <p class="caption"><%= post.content %></p>
+                        <p> <i class="fas fa-thumbs-up"></i> 15 Peoples liked this post  </p>
+                        <hr width="100%" color="black">
+                        <div class="like_comment">
+                            <div class="like_btn_div">
+                                <a href=""> <i class="far fa-heart"></i> </a>
+                                <p>Like</p>
+                            </div>
+                            <div class="comment_btn_div">
+                                <%const postId = post.id %>
+                                <a onclick="toggleCommentSec('<%= post.id %>')" > <i class="far fa-comment"></i> </a>
+                                <p>Comment</p>
+                            </div>
                         </div>
-                        <div class="comment_btn_div">
-                            <%const postId = post.id %>
-                            <a onclick="toggleCommentSec('<%= post.id %>')" > <i class="far fa-comment"></i> </a>
-                            <p>Comment</p>
-                        </div>
-                    </div>
-
-
-                    <div class="comment_display <%= post.id%> hidden-content" id="comment_id">
-                        <form action="/comment/create" method="post">
-                            <textarea name="comment_content" id="" cols="60" rows="2" placeholder="Write Comment"></textarea>
-                            <input type="hidden" value="<%= post._id %>" name="post_id">
-                            <input type="hidden" value="<%= locals.user._id %>" name="comment_user_id" >
-                            <button type="submit">Comment</button>
-                        </form>
                         
-                        <%             
-                            for(comment of post.comments){%>
-                                <div class="comment ">
-                                    <div class="comment_userinfo">
-                                        <div class="comment_userinfo_1">
-                                            <img src="/photos/dp.png" alt="Avatar">
-                                            <p> <%=comment.user_id.first_name%> <%=comment.user_id.last_name%> </p>
-                                        </div>
+    
+                        <div class="comment_display <%= post.id%> hidden-content" id="comment_id">
+                            <form id="create_comment" action="/comment/create" method="post">
+                                <textarea name="comment_content" id="" cols="60" rows="2" placeholder="Write Comment"></textarea>
+                                <input type="hidden" value="<%= post._id %>" name="post_id">
+                                <input type="hidden" value="<%= locals.user._id %>" name="comment_user_id" >
+                                <button type="submit">Comment</button>
+                            </form>
+                           
+                            <ul id="post_commment_<%= post.id%>" class="comment_list">
+                                <%             
+                                    for(comment of post.comments){%>
+                                        <%- include('_comment.ejs') -%>
+                                    <%}               
+                                %>
+                            </ul>
 
-                                        <div class="comment_userinfo_2">
-                                                <%
-                                                    if(locals.user && (comment.user_id.id == locals.user.id)){%>
-                                                        <a href="/comment/delete/<%= comment.id %>"> <i class="fas fa-trash"></i> </a>    
-                                                    <%}
-                                                %>    
-                                        </div>
-                                    </div>
-                                    <div class="comment_content">
-                                          <p> <%= comment.content %> </p>
-                                    </div>
-                                </div>
-                            <%}           
-                        %>
+                        </div>
                     </div>
-                </div>
+                </li>
             <%}
         %>
+
+        </ul>
 
     </div>
 
@@ -163,6 +153,8 @@
             }).show();  
         <%} %>
     </script>
+
+    <script src="/js/script_timeline.js"></script>
 
     </body>
 </html>

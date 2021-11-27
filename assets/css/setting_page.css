@@ -1,0 +1,134 @@
+body{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #436bd8;
+    background-image:url('/photos/Back_img.jpg');
+    background-blend-mode: unset;
+    font-family: 'Capriola', sans-serif;
+    color: #FFFA87;
+    margin: 0px;
+}
+
+nav{
+    Height: 60px;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.644);
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0px;
+    margin-bottom: 10px;
+}
+
+.active_link{
+    color: blueviolet!important;
+
+}
+
+
+.header{
+    height: 60px;
+    display: flex;
+    width: 60vw;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header h1{
+    margin: 1px;
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+nav a{
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: ease-in-out 0.3s;
+}
+
+a:hover{
+    transform: scale(1.1);
+    color: blueviolet;
+
+}
+
+a:active{
+    opacity: 0.7;
+}
+
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.mt-70{
+    margin-top: 70px!important;
+    width: 50vw!important;
+    color: black;
+    padding: 5px!important;
+
+}
+
+.container{
+    background-color: rgba(255, 255, 255, 0.815);
+}
+
+#dp_image{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+.py-5{
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+}
+
+
+#upload_dp input{
+    font-size: 0.5rem!important;
+}

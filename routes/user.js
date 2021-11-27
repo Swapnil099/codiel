@@ -24,6 +24,11 @@ router.get('/sign-out',userController.destroy_session);
 
 router.post('/create-user',userController.create_user);
 
+router.post('/update-profile',checkAuthentication,userController.update_profile);
+
+router.post('/update-dp',checkAuthentication,userController.update_dp);
+
+
 router.post('/create-session', passport.authenticate(
     "local",
     {failureRedirect: '/user/sign-in'},
@@ -33,8 +38,7 @@ router.get('/timeline',checkAuthentication,userController.timeline);
 
 router.get('/search',checkAuthentication,userController.search);
 
-
-
+router.get('/setting',checkAuthentication,userController.setting);
 
 
 module.exports = router;

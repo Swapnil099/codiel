@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const customMware = require('./config/custom_Mware_flash');
@@ -15,7 +16,10 @@ const customMware = require('./config/custom_Mware_flash');
 app.set('view engine','ejs');
 app.set('views','./views');
 
-app.use(express.urlencoded()); 
+app.use(express.urlencoded());
+
+// make uploads route request path availaible to server (upload requests comes from image src's) 
+app.use('/upload',express.static(__dirname + '/upload'));
 app.use(cookieParser());
 app.use(express.static('assets'));
 

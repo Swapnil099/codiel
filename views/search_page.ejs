@@ -20,8 +20,8 @@
             <a href="/user/search" class="active_link">Search</a>
             <a href="/user/profile">Profile</a>
             <a href="#">Friends</a>
-            <a href="#">Setting</a>
             <a href="#">Chat</a>
+            <a href="/user/setting">Setting</a>
             <a href="/user/sign-out">Log Out</a>
         </div>
     </nav>
@@ -38,18 +38,22 @@
 
     <div class="search_result_div">
         <p class="search_result"> <%= found_users.length %> Results found</p>
-        <%
-            for(user of found_users){%>
-                <div class="friend_result">
-                    <div class="friend_info">
-                        <img src="/photos/dp.png" alt="">
-                        <a href=""></a>
-                        <p> <a href="/user/show-profile/<%=user.id%>" title="Go To Profile" > <%= user.first_name %> <%= user.last_name %> </a> </p>
-                    </div>
-                    <a href="" title="Send Friend Request"> <i class="fas fa-user-plus"></i> </a>
-                </div>                    
-            <%}
-        %>
+        <ul>
+            <%
+                for(user of found_users){%>
+                    <li>
+                        <div class="friend_result">
+                            <div class="friend_info">
+                                <img src="<%= user.avatar %>" alt="">
+                                <a href=""></a>
+                                <p> <a href="/user/show-profile/<%=user.id%>" title="Go To Profile" > <%= user.first_name %> <%= user.last_name %> </a> </p>
+                            </div>
+                            <a href="" title="Send Friend Request"> <i class="fas fa-user-plus"></i> </a>
+                        </div>   
+                    </li>                 
+                <%}
+            %>
+        </ul>
 
     </div>
 
